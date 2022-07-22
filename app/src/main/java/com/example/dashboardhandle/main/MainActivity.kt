@@ -1,5 +1,6 @@
 package com.example.dashboardhandle.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.example.dashboardhandle.R
 import com.example.dashboardhandle.databinding.ActivityMainBinding
 import com.example.dashboardhandle.main.home.HomeFragment
 import com.example.dashboardhandle.main.match.MatchFragment
+import com.example.dashboardhandle.request.RequestActivity
 import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,29 +31,13 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         setupWithNavController(mainBinding.bottomNavigation, navController)
 
-//        initBottomNavigation()
+        initEvents()
 
     }
 
-//    private fun initBottomNavigation() {
-//        mainBinding.bottomNavigation.setOnNavigationItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.home -> {
-//                    loadFragment(HomeFragment())
-//                    return@setOnNavigationItemSelectedListener
-//                }
-//                R.id.my_matches -> {
-//                    loadFragment(MatchFragment())
-//                    return@setOnNavigationItemSelectedListener
-//                }
-//            }
-//        }
-//    }
-
-//    private fun loadFragment(fragment: Fragment) {
-//        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.replace(, fragment)
-//        transaction.addToBackStack(null)
-//        transaction.commit()
-//    }
+    private fun initEvents() {
+        mainBinding.fab.setOnClickListener {
+            startActivity(Intent(this, RequestActivity::class.java))
+        }
+    }
 }
