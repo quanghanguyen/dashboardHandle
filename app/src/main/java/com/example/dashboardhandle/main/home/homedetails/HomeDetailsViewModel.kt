@@ -20,12 +20,14 @@ class HomeDetailsViewModel @Inject constructor(private val homeDetailsRepository
 
     fun handleUpdate(
         matchId : String,
-        uid : String
+        uid : String,
+        clientUid : String,
+        click : Int,
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            homeDetailsRepository.update(matchId, uid, {
+            homeDetailsRepository.update(matchId, uid, clientUid, click, {
                 updateRequest.value = UpdateRequest.ResultOk("Success")
             }, {
                 updateRequest.value = UpdateRequest.ResultError(it)

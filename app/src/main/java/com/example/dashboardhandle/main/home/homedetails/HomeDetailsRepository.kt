@@ -8,11 +8,14 @@ class HomeDetailsRepository @Inject constructor(private val firebaseDatabase: Fi
     fun update(
         matchId : String,
         uid : String,
+        clientUid: String,
+        click : Int,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
         val user = mapOf(
-            "uid" to uid
+            clientUid to uid,
+            "click" to click
         )
 
         DatabaseConnection.firebaseDatabase.getReference("Requests").child(matchId).updateChildren(user)

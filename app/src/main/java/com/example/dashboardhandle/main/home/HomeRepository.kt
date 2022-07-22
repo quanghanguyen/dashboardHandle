@@ -1,5 +1,8 @@
 package com.example.dashboardhandle.main.home
 
+import android.util.Log
+import android.widget.Toast
+import com.example.dashboardhandle.firebaseconnection.AuthConnection.uid
 import com.example.dashboardhandle.model.RequestModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,13 +19,20 @@ class HomeRepository @Inject constructor(private val firebaseDatabase: FirebaseD
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    val list = ArrayList<RequestModel>()
+                    val listRequest = ArrayList<RequestModel>()
                     for (requestSnapshot in snapshot.children) {
-                        requestSnapshot.getValue(RequestModel::class.java)?.let {
-                            list.add(0, it)
+                        requestSnapshot.getValue(RequestModel::class.java)?.let {list ->
+                            when {
+                                uid != list.clientUid1 && uid != list.clientUid2 && uid != list.clientUid3 -> {
+                                    listRequest.add(0, list)
+                                }
+                                else -> {
+                                    Log.e("Thong bao", "Failed")
+                                }
+                            }
                         }
                     }
-                    onSuccess(list)
+                    onSuccess(listRequest)
                 }
             }
 

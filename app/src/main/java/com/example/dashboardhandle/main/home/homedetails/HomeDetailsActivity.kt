@@ -63,10 +63,13 @@ class HomeDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateRequest() {
+        var click = homeDetailsBinding.click.text.toString().toInt()
         homeDetailsBinding.sendRequest.setOnClickListener {
+            click += 1
+            val clientUid = "clientUid$click"
             matchId?.let { matchId ->
                 if (uid != null) {
-                    homeDetailsViewModel.handleUpdate(matchId, uid)
+                    homeDetailsViewModel.handleUpdate(matchId, uid, clientUid, click)
                 }
             }
         }
@@ -83,6 +86,7 @@ class HomeDetailsActivity : AppCompatActivity() {
                 pitch.text = data?.pitch
                 note.text = data?.note
                 datetime.text = data?.datetime
+                click.text = data?.click.toString()
                 matchId = data?.matchId
                 }
             }
